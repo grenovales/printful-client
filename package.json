@@ -7,10 +7,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest --config jestconfig.json",
-    "lint": "",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test ",
-    "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },

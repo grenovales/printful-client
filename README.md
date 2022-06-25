@@ -108,6 +108,6 @@ Refer to the [Printful API Documentation](https://developers.printful.com/docs/)
 **New contributors welcome!** just create a PR 😎
 
 ## Todo
-- Add PgaeSize to GetAll Products
+- Add Page Size to GetAll Products
 - Add more endpoints
 - Unit testing

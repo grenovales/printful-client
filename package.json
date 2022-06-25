@@ -1,7 +1,7 @@
 {
   "name": "printful-client",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Printful API Wrapper in TypeScript",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

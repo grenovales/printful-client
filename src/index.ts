@@ -3,7 +3,7 @@ import { Products } from "./modules/Products";
 import { Shipping } from "./modules/Shipping";
 import { Tax } from "./modules/Tax";
 
-class Printful {
+class PrintfulClient {
   public products: Products;
   public shipping: Shipping;
   public tax: Tax;
@@ -21,4 +21,4 @@ class Printful {
   }
 }
 
-export { Printful };
+export { PrintfulClient };

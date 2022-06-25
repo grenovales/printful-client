@@ -2,7 +2,21 @@
 
 Request wrapper for Printful, with authorization management. **Not to be used client-side**.
 
-### Get Product
+## Install
+
+
+```bash
+# Npm:
+npm install printful-client
+
+# Yarn:
+yarn add printful-client
+
+# Pnpm: 💝
+pnpm add printful-client
+```
+
+### Get Product  
 
 ```js
 const { PrintfulClient } = require("printful-client");
@@ -85,8 +99,13 @@ printful.tax.getRate(taxRequest).then((response: Response) => {
 ```
 Refer to the [Printful API Documentation](https://developers.printful.com/docs/)
 
+## Links
+
+- [License (MIT)](LICENSE)
+
 ## Contributions
-Contributions are always welcome, create a PR 😎 
+
+**New contributors welcome!** just create a PR 😎
 
 ## Todo
 - Add PgaeSize to GetAll Products

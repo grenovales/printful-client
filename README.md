@@ -2,36 +2,45 @@
 
 Request wrapper for Printful, with authorization management. **Not to be used client-side**.
 
-## Quickstart
+### Get Product
 
 ```js
 const { PrintfulClient } = require("printful-client");
-
 const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-//Get Product
 printful.products.get("PRODUCT_ID").then((response: Response) => {
   response.json().then((value) => {
     console.log(JSON.stringify(val));
   });
 });
+```
 
-//Get all Products
+### Get all store products 🛍 
+```js
+const { PrintfulClient } = require("printful-client");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
+
 //TODO: Add PageSize
 printful.products.getAll().then((response: Response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
 });
+```
+### Get product variant 👕  
+```js
+const { PrintfulClient } = require("printful-client");
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-//Get Product Variant 👕 
 printful.products.variants.get("VARIANT_ID").then((response: Response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
 });
+```
 
-//Calculate Shipping Rate 📦 
+### Calculate Shipping Rate 📦 
+```js
 const shippingRequest = {
   recipient: {
     address1: "5246 US Hwy 98 N",
@@ -55,8 +64,10 @@ printful.shipping.calculate(shippingRquest).then((response: Response) => {
     console.log(JSON.stringify(val));
   });
 });
+```
 
-// Get Tax Rate 😢 
+### Get Tax Rate 😢 
+```js
 const taxRequest = {
   recipient: {
     "country_code": "US",
@@ -71,7 +82,13 @@ printful.tax.getRate(taxRequest).then((response: Response) => {
     console.log(JSON.stringify(val));
   });
 });
-
-## Examples
-
+```
 Refer to the [Printful API Documentation](https://developers.printful.com/docs/)
+
+## Contributions
+Contributions are always welcome, create a PR 😎 
+
+## Todo
+- Add PgaeSize to GetAll Products
+- Add more endpoints
+- Unit testing

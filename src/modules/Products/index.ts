@@ -6,6 +6,11 @@ import { BaseModule } from "../BaseModule";
 import { Variants } from "./Variants";
 import { RequestHelper } from "../../RequestHelper";
 
+type ProductQuery = {
+  offset?: string;
+  limit?: string;
+};
+
 class Products extends BaseModule {
   public variants: Variants;
 
@@ -21,9 +26,13 @@ class Products extends BaseModule {
     });
   }
 
-  getAll(): Promise<Response> {
+  getAll(productQuery?: ProductQuery): Promise<Response> {
     //Get all Products
-    return this._execute(`/store/products`, {
+    let path = `/store/products`;
+    if (productQuery) {
+      path += `?${new URLSearchParams(productQuery).toString()}`;
+    }
+    return this._execute(path, {
       method: "Get",
     });
   }

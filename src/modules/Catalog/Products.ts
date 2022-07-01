@@ -19,20 +19,16 @@ class Products extends BaseModule {
     this.variants = new Variants(requestHelper);
   }
 
-  get(id: string): Promise<Response> {
+  get(id: number): Promise<Response> {
     //Get one Product
-    return this._execute(`/store/products/${id}`, {
+    return this._execute(`/products/${id}`, {
       method: "Get",
     });
   }
 
-  getAll(productQuery?: ProductQuery): Promise<Response> {
+  getAll(): Promise<Response> {
     //Get all Products
-    let path = `/store/products`;
-    if (productQuery) {
-      path += `?${new URLSearchParams(productQuery).toString()}`;
-    }
-    return this._execute(path, {
+    return this._execute("/products", {
       method: "Get",
     });
   }

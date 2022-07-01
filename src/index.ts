@@ -11,9 +11,11 @@ class PrintfulClient {
   public tax: Tax;
   public orders: Orders;
   public catalog: Catalog;
+
   /**
    *
    * @param apiToken Printful API Token
+   * @param storeID Store ID, is not required unles using for one specific Store
    */
   constructor(apiToken: string, storeID?: string) {
     if (!apiToken) throw new Error("No API Provided");

@@ -25,6 +25,7 @@ to the v1 OpenAPI spec in `docs/printful-openapi.v1.json`.
 - Base URL: `https://api.printful.com` (optional `apiVersion` path in constructor).
 - Auth: `Authorization: Bearer <token>`.
 - Store scope header (optional): `X-PF-Store-Id`.
+- Localisation header (optional): `X-PF-Language`.
 
 ## OpenAPI Tag to Module Mapping
 
@@ -53,16 +54,23 @@ This maps OpenAPI tags in the v1 spec to the current module locations.
 This list captures the currently implemented endpoints and their wrapper methods.
 
 ### Catalog API
-- `GET /products` -> `client.catalog.products.getAll()`
+- `GET /products` -> `client.catalog.products.getAll(query?)`
 - `GET /products/{id}` -> `client.catalog.products.get(id)`
+- `GET /products/{id}/sizes` -> `client.catalog.products.getSizes(id, unit?)`
 - `GET /products/variant/{id}` -> `client.catalog.products.variants.get(id)`
 - `GET /categories` -> `client.catalog.categories.getAll()`
 - `GET /categories/{id}` -> `client.catalog.categories.get(id)`
 
 ### Products API (Store)
 - `GET /store/products` -> `client.products.getAll(query?)`
+- `POST /store/products` -> `client.products.create(body)`
 - `GET /store/products/{id}` -> `client.products.get(id)`
+- `PUT /store/products/{id}` -> `client.products.update(id, body)`
+- `DELETE /store/products/{id}` -> `client.products.delete(id)`
+- `POST /store/products/{id}/variants` -> `client.products.createVariant(id, body)`
 - `GET /store/variants/{id}` -> `client.products.variants.get(id)`
+- `PUT /store/variants/{id}` -> `client.products.variants.update(id, body)`
+- `DELETE /store/variants/{id}` -> `client.products.variants.delete(id)`
 
 ### Orders API
 - `POST /orders/estimate-costs` -> `client.orders.estimate_cost(body)`
@@ -77,6 +85,15 @@ This list captures the currently implemented endpoints and their wrapper methods
 
 ### Tax Rate API
 - `POST /tax/rates` -> `client.tax.getRate(body)`
+
+## Query Params Reference (v1)
+
+### Catalog API
+- `client.catalog.products.getAll({ category_id, offset, limit })`
+- `client.catalog.products.getSizes(id, unit?)` where `unit` is `inches` or `cm`
+
+### Products API (Store)
+- `client.products.getAll({ status, category_id, offset, limit })`
 
 ## Adding or Updating Endpoints (v1)
 

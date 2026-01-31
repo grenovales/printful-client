@@ -8,93 +8,127 @@ import { RequestHelper } from "../RequestHelper";
 /**
  * Order Request Type
  */
+type ItemOptionValue = string | number | boolean | Array<string | number | boolean>;
+
+type ItemOption = {
+  id: string;
+  value: ItemOptionValue;
+};
+
+type FileOption = {
+  id: string;
+  value: ItemOptionValue;
+};
+
+type FilePosition = {
+  area_width?: number;
+  area_height?: number;
+  width?: number;
+  height?: number;
+  top?: number;
+  left?: number;
+  limit_to_print_area?: boolean;
+};
+
+type OrderFile = {
+  id?: number;
+  type?: string;
+  url?: string;
+  filename?: string;
+  visible?: boolean;
+  options?: FileOption[];
+  position?: FilePosition;
+};
+
+type OrderRecipient = {
+  name?: string;
+  company?: string;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state_code?: string;
+  state_name?: string;
+  country_code?: string;
+  country_name?: string;
+  zip?: string;
+  phone?: string;
+  email?: string;
+  tax_number?: string;
+};
+
+type OrderItem = {
+  id?: number;
+  external_id?: string;
+  variant_id?: number;
+  sync_variant_id?: number;
+  external_variant_id?: string;
+  warehouse_product_variant_id?: number;
+  product_template_id?: number;
+  external_product_id?: string;
+  quantity: number;
+  price?: string;
+  retail_price?: string;
+  name?: string;
+  product?: {
+    variant_id: number;
+    product_id: number;
+    image: string;
+    name: string;
+  };
+  files?: OrderFile[];
+  options?: ItemOption[];
+  sku?: string | null;
+  discontinued?: boolean;
+  out_of_stock?: boolean;
+};
+
+type RetailCosts = {
+  currency?: string;
+  subtotal?: string | number | null;
+  discount?: string | number | null;
+  shipping?: string | number | null;
+  tax?: string | number | null;
+  vat?: string | number | null;
+  total?: string | number | null;
+};
+
+type OrderGift = {
+  subject?: string;
+  message?: string;
+};
+
+type PackingSlip = {
+  email?: string;
+  phone?: string;
+  message?: string;
+  logo_url?: string;
+  store_name?: string;
+  custom_order_id?: string;
+};
+
 type OrderRequest = {
   external_id?: string;
   shipping?: string;
-  recipient: {
-    name?: string;
-    company?: string;
-    address1?: string;
-    address2?: string;
-    city?: string;
-    state_code?: string;
-    state_name?: string;
-    country_code?: string;
-    country_name?: string;
-    zip?: string;
-    phone?: string;
-    email?: string;
-    tax_number?: string;
-  };
-  items: {
-    id?: number;
-    external_id?: string;
-    variant_id?: number;
-    sync_variant_id?: number;
-    warehouse_product_variant_id?: number;
-    quantity: number;
-    price?: string; // Prinful Price of the item
-    retail_price: string; // Original retail price of the item to be displayed on the packing slip
-    name?: string;
-    product?: {
-      variant_id: number;
-      product_id: number;
-      image: string;
-      name: string;
-    };
-    files?: {
-      type?: string;
-      url: string;
-      options: {
-        id: string;
-        value: string;
-      }[];
-      filename: string;
-      visible: boolean;
-      position: {
-        area_width: number;
-        area_height: number;
-        width: number;
-        height: number;
-        top: number;
-        left: number;
-        limit_to_print_area: boolean;
-      };
-    }[];
-    options?: {
-      id: string;
-      value: string;
-    }[];
-    sku?: string;
-  }[];
-  retail_cost?: {
-    currency: string;
-    subtotal: string;
-    discount: string;
-    shipping: string;
-    digitization: string;
-    tax: string;
-    vat: string;
-    total: string;
-  };
-  gift?: {
-    subject: string;
-    message: string;
-  };
-  packing_slip?: {
-    email: string;
-    phone: string;
-    message: string;
-    logo_url: string;
-    store_name: string;
-    custome_order_id: string;
-  };
+  recipient: OrderRecipient;
+  items: OrderItem[];
+  retail_costs?: RetailCosts;
+  gift?: OrderGift;
+  packing_slip?: PackingSlip;
 };
 
 type OrderQuery = {
   status?: string;
   offset?: string;
   limit?: string;
+};
+
+type CreateOrderOptions = {
+  confirm?: boolean;
+  update_existing?: boolean;
+};
+
+type UpdateOrderOptions = {
+  confirm?: boolean;
 };
 
 class Orders extends BaseModule {
@@ -107,7 +141,7 @@ class Orders extends BaseModule {
    * @param shippingRequest
    * @returns Response Object with Order Cost
    */
-  estimate_cost(orderRequest: OrderRequest): Promise<Response> {
+  public estimate_cost(orderRequest: OrderRequest): Promise<Response> {
     //Get one Product
     return this._execute(`/orders/estimate-costs`, {
       body: JSON.stringify(orderRequest),
@@ -120,9 +154,26 @@ class Orders extends BaseModule {
    * @param orderRequest Order request object
    * @returns
    */
-  create(orderRequest: OrderRequest): Promise<Response> {
+  public create(
+    orderRequest: OrderRequest,
+    options?: CreateOrderOptions
+  ): Promise<Response> {
     //Get one Product
-    return this._execute(`/orders`, {
+    let path = `/orders`;
+    if (options) {
+      const params = new URLSearchParams();
+      if (options.confirm !== undefined) {
+        params.set("confirm", options.confirm ? "true" : "false");
+      }
+      if (options.update_existing !== undefined) {
+        params.set("update_existing", options.update_existing ? "true" : "false");
+      }
+      const queryString = params.toString();
+      if (queryString) {
+        path += `?${queryString}`;
+      }
+    }
+    return this._execute(path, {
       body: JSON.stringify(orderRequest),
       method: "Post",
     });
@@ -133,7 +184,7 @@ class Orders extends BaseModule {
    * @param orderID Order ID
    * @returns
    */
-  get(orderID: string | number): Promise<Response> {
+  public get(orderID: string | number): Promise<Response> {
     //Get one Product
     return this._execute(`/orders/${orderID}`, {
       method: "Get",
@@ -145,11 +196,18 @@ class Orders extends BaseModule {
    * @param orderQuery Query Params
    * @returns
    */
-  getAll(orderQuery?: OrderQuery): Promise<Response> {
+  public getAll(orderQuery?: OrderQuery): Promise<Response> {
     //Get one Product
     let path = "/orders";
     if (orderQuery) {
-      path += `?${new URLSearchParams(orderQuery).toString()}`;
+      const params = new URLSearchParams();
+      if (orderQuery.status) params.set("status", orderQuery.status);
+      if (orderQuery.offset) params.set("offset", orderQuery.offset);
+      if (orderQuery.limit) params.set("limit", orderQuery.limit);
+      const queryString = params.toString();
+      if (queryString) {
+        path += `?${queryString}`;
+      }
     }
 
     return this._execute(path.toString(), {
@@ -158,11 +216,40 @@ class Orders extends BaseModule {
   }
 
   /**
+   * Update order data
+   * @param orderID Order ID
+   * @param orderRequest Order update request object
+   * @param options Optional update options
+   * @returns
+   */
+  public update(
+    orderID: string | number,
+    orderRequest: OrderRequest,
+    options?: UpdateOrderOptions
+  ): Promise<Response> {
+    let path = `/orders/${orderID}`;
+    if (options) {
+      const params = new URLSearchParams();
+      if (options.confirm !== undefined) {
+        params.set("confirm", options.confirm ? "true" : "false");
+      }
+      const queryString = params.toString();
+      if (queryString) {
+        path += `?${queryString}`;
+      }
+    }
+    return this._execute(path, {
+      body: JSON.stringify(orderRequest),
+      method: "Put",
+    });
+  }
+
+  /**
    * Approves for fulfillment an order that was saved as a draft. Store owner's credit card is charged when the order is submitted for fulfillment
    * @param orderID Order ID
    * @returns
    */
-  confirm(orderID: string | number): Promise<Response> {
+  public confirm(orderID: string | number): Promise<Response> {
     //Get one Product
     return this._execute(`/orders/${orderID}/confirm`, {
       method: "Post",
@@ -174,7 +261,7 @@ class Orders extends BaseModule {
    * @param orderID Otrder ID
    * @returns
    */
-  cancel(orderID: string | number): Promise<Response> {
+  public cancel(orderID: string | number): Promise<Response> {
     //Get one Product
     return this._execute(`/orders/${orderID}`, {
       method: "Delete",

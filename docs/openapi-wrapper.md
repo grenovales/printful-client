@@ -27,6 +27,20 @@ to the v1 OpenAPI spec in `docs/printful-openapi.v1.json`.
 - Store scope header (optional): `X-PF-Store-Id`.
 - Localisation header (optional): `X-PF-Language`.
 
+### Error Handling Helper (opt-in)
+
+The client exposes `requestJson()` to parse JSON and throw a `PrintfulApiError`
+for non-2xx responses. This is opt-in and does not change existing module
+methods that return `Response`.
+
+Example:
+
+```ts
+const data = await client.requestJson<{ code: number; result: unknown }>(
+  "/products"
+);
+```
+
 ## OpenAPI Tag to Module Mapping
 
 This maps OpenAPI tags in the v1 spec to the current module locations.

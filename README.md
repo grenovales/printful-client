@@ -34,7 +34,6 @@ printful.products.get("PRODUCT_ID").then((response: Response) => {
 const { PrintfulClient } = require("printful-client");
 const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-//TODO: Add PageSize
 printful.products.getAll().then((response: Response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
@@ -96,6 +95,24 @@ printful.tax.getRate(taxRequest).then((response: Response) => {
     console.log(JSON.stringify(val));
   });
 });
+```
+
+### Request JSON with error handling
+`requestJson` parses the JSON body and throws a `PrintfulApiError` on non-2xx responses.
+
+```js
+const { PrintfulClient } = require("printful-client");
+
+const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
+
+printful
+  .requestJson("/products")
+  .then((data) => {
+    console.log(JSON.stringify(data));
+  })
+  .catch((error) => {
+    console.error(error.status, error.message);
+  });
 ```
 Refer to the [Printful API Documentation](https://developers.printful.com/docs/)
 

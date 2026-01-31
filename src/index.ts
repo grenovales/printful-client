@@ -15,11 +15,12 @@ class PrintfulClient {
   /**
    *
    * @param apiToken Printful API Token
-   * @param storeID Store ID, is not required unles using for one specific Store
+   * @param storeID Store ID, is not required unless using for one specific Store
+   * @param apiVersion Optional API version path (e.g. "v2" or "/v2") to use in the base URL
    */
-  constructor(apiToken: string, storeID?: string) {
+  constructor(apiToken: string, storeID?: string, apiVersion?: string) {
     if (!apiToken) throw new Error("No API Provided");
-    const requestHelper = new RequestHelper(apiToken, storeID);
+    const requestHelper = new RequestHelper(apiToken, storeID, apiVersion);
     this.products = new Products(requestHelper);
     this.shipping = new Shipping(requestHelper);
     this.tax = new Tax(requestHelper);

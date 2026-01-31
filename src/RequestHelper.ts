@@ -5,9 +5,9 @@ import fetch, { Headers } from "cross-fetch";
 
 class RequestHelper {
   private headers: Headers;
-  private apiUrl: string;
+  private baseUrl: string;
 
-  constructor(apiToken: string, storeID?: string) {
+  constructor(apiToken: string, storeID?: string, apiVersion?: string) {
     this.headers = new Headers();
     this.headers.append("Authorization", `Bearer ${apiToken}`);
     this.headers.append("content_type", "application/json");
@@ -15,11 +15,15 @@ class RequestHelper {
       this.headers.append("X-PF-Store-Id", storeID);
     }
 
-    this.apiUrl = "https://api.printful.com";
+    const versionPath =
+      apiVersion != null
+        ? `/${apiVersion.replace(/^\//, "")}`
+        : "";
+    this.baseUrl = `https://api.printful.com${versionPath}`;
   }
 
   request(path: string, options?: RequestInit | undefined): Promise<Response> {
-    return fetch(`${this.apiUrl}${path}`, {
+    return fetch(`${this.baseUrl}${path.startsWith("/") ? path : `/${path}`}`, {
       headers: this.headers,
       ...options,
     });

@@ -1,6 +1,6 @@
 {
   "name": "printful-client",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Printful API Wrapper in TypeScript",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,20 +17,20 @@
   "author": "Gerardo Renovales",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "eslint": "^8.52.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.0.3",
-    "ts-jest": "^29.1.1",
+    "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.1",
+    "ts-jest": "^29.4.6",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.3"
   },
   "files": [
     "lib/**/*"
   ],
   "dependencies": {
-    "cross-fetch": "^4.0.0"
+    "cross-fetch": "^4.1.0"
   }
 }

@@ -7,12 +7,20 @@ class RequestHelper {
   private headers: Headers;
   private baseUrl: string;
 
-  constructor(apiToken: string, storeID?: string, apiVersion?: string) {
+  constructor(
+    apiToken: string,
+    storeID?: string,
+    apiVersion?: string,
+    locale?: string
+  ) {
     this.headers = new Headers();
     this.headers.append("Authorization", `Bearer ${apiToken}`);
     this.headers.append("content_type", "application/json");
     if (storeID) {
       this.headers.append("X-PF-Store-Id", storeID);
+    }
+    if (locale) {
+      this.headers.append("X-PF-Language", locale);
     }
 
     const versionPath =

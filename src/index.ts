@@ -17,10 +17,21 @@ class PrintfulClient {
    * @param apiToken Printful API Token
    * @param storeID Store ID, is not required unless using for one specific Store
    * @param apiVersion Optional API version path (e.g. "v2" or "/v2") to use in the base URL
+   * @param locale Optional localisation locale (e.g. "es_ES") for X-PF-Language
    */
-  constructor(apiToken: string, storeID?: string, apiVersion?: string) {
+  constructor(
+    apiToken: string,
+    storeID?: string,
+    apiVersion?: string,
+    locale?: string
+  ) {
     if (!apiToken) throw new Error("No API Provided");
-    const requestHelper = new RequestHelper(apiToken, storeID, apiVersion);
+    const requestHelper = new RequestHelper(
+      apiToken,
+      storeID,
+      apiVersion,
+      locale
+    );
     this.products = new Products(requestHelper);
     this.shipping = new Shipping(requestHelper);
     this.tax = new Tax(requestHelper);

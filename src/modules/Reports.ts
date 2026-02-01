@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** Report type for statistics (comma-separated in API). */
 export type ReportType =
@@ -51,7 +51,7 @@ class Reports extends BaseModule {
     params.set("date_to", query.date_to);
     if (query.currency != null) params.set("currency", query.currency);
     const qs = params.toString();
-    return this._execute(`/reports/statistics?${qs}`, { method: "Get" });
+    return this._execute(`/reports/statistics?${qs}`, { method: HttpMethod.Get });
   }
 }
 

@@ -3,7 +3,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /**
  * Order Request Type
@@ -145,7 +145,7 @@ class Orders extends BaseModule {
     //Get one Product
     return this._execute(`/orders/estimate-costs`, {
       body: JSON.stringify(orderRequest),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -175,7 +175,7 @@ class Orders extends BaseModule {
     }
     return this._execute(path, {
       body: JSON.stringify(orderRequest),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -185,9 +185,12 @@ class Orders extends BaseModule {
    * @returns
    */
   public get(orderID: string | number): Promise<Response> {
-    //Get one Product
-    return this._execute(`/orders/${orderID}`, {
-      method: "Get",
+    const pathId =
+      typeof orderID === "string"
+        ? encodeURIComponent(orderID)
+        : String(orderID);
+    return this._execute(`/orders/${pathId}`, {
+      method: HttpMethod.Get,
     });
   }
 
@@ -211,7 +214,7 @@ class Orders extends BaseModule {
     }
 
     return this._execute(path.toString(), {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 
@@ -227,7 +230,11 @@ class Orders extends BaseModule {
     orderRequest: OrderRequest,
     options?: UpdateOrderOptions
   ): Promise<Response> {
-    let path = `/orders/${orderID}`;
+    const pathId =
+      typeof orderID === "string"
+        ? encodeURIComponent(orderID)
+        : String(orderID);
+    let path = `/orders/${pathId}`;
     if (options) {
       const params = new URLSearchParams();
       if (options.confirm !== undefined) {
@@ -240,7 +247,7 @@ class Orders extends BaseModule {
     }
     return this._execute(path, {
       body: JSON.stringify(orderRequest),
-      method: "Put",
+      method: HttpMethod.Put,
     });
   }
 
@@ -250,21 +257,27 @@ class Orders extends BaseModule {
    * @returns
    */
   public confirm(orderID: string | number): Promise<Response> {
-    //Get one Product
-    return this._execute(`/orders/${orderID}/confirm`, {
-      method: "Post",
+    const pathId =
+      typeof orderID === "string"
+        ? encodeURIComponent(orderID)
+        : String(orderID);
+    return this._execute(`/orders/${pathId}/confirm`, {
+      method: HttpMethod.Post,
     });
   }
 
   /**
    * Cancels pending order or draft. Charged amount is returned to the store owner's credit card.
-   * @param orderID Otrder ID
+   * @param orderID Order ID
    * @returns
    */
   public cancel(orderID: string | number): Promise<Response> {
-    //Get one Product
-    return this._execute(`/orders/${orderID}`, {
-      method: "Delete",
+    const pathId =
+      typeof orderID === "string"
+        ? encodeURIComponent(orderID)
+        : String(orderID);
+    return this._execute(`/orders/${pathId}`, {
+      method: HttpMethod.Delete,
     });
   }
 }

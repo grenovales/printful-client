@@ -3,7 +3,7 @@
  */
 
 import { BaseModule } from "../BaseModule";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 class Categories extends BaseModule {
   constructor(requestHelper: RequestHelper) {
@@ -13,14 +13,14 @@ class Categories extends BaseModule {
   get(id: number): Promise<Response> {
     //Get one Category
     return this._execute(`/categories/${id}`, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 
   getAll(): Promise<Response> {
     //Get all Categories
     return this._execute("/categories", {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 }

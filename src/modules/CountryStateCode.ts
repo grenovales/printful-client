@@ -5,7 +5,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 class CountryStateCode extends BaseModule {
   constructor(requestHelper: RequestHelper) {
@@ -17,7 +17,7 @@ class CountryStateCode extends BaseModule {
    * GET /countries
    */
   public getCountries(): Promise<Response> {
-    return this._execute("/countries", { method: "Get" });
+    return this._execute("/countries", { method: HttpMethod.Get });
   }
 }
 

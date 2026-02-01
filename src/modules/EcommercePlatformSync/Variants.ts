@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "../BaseModule";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 /** File attachment for sync variant (partial File schema). */
 export type SyncVariantFile = {
@@ -54,7 +54,7 @@ class SyncVariants extends BaseModule {
   public get(id: SyncVariantId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/sync/variant/${pathId}`, { method: "Get" });
+    return this._execute(`/sync/variant/${pathId}`, { method: HttpMethod.Get });
   }
 
   /**
@@ -70,7 +70,7 @@ class SyncVariants extends BaseModule {
       typeof id === "string" ? encodeURIComponent(id) : String(id);
     return this._execute(`/sync/variant/${pathId}`, {
       body: JSON.stringify(body),
-      method: "Put",
+      method: HttpMethod.Put,
     });
   }
 
@@ -81,7 +81,7 @@ class SyncVariants extends BaseModule {
   public delete(id: SyncVariantId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/sync/variant/${pathId}`, { method: "Delete" });
+    return this._execute(`/sync/variant/${pathId}`, { method: HttpMethod.Delete });
   }
 }
 

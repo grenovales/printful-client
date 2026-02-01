@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** Position for a file in the mockup generation task. */
 export type MockupTaskFilePosition = {
@@ -69,7 +69,7 @@ class MockupGenerator extends BaseModule {
   ): Promise<Response> {
     return this._execute(`/mockup-generator/create-task/${productId}`, {
       body: JSON.stringify(body),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -90,7 +90,7 @@ class MockupGenerator extends BaseModule {
       const qs = params.toString();
       if (qs) path += `?${qs}`;
     }
-    return this._execute(path, { method: "Get" });
+    return this._execute(path, { method: HttpMethod.Get });
   }
 
   /**
@@ -100,7 +100,7 @@ class MockupGenerator extends BaseModule {
   public getTask(taskKey: string): Promise<Response> {
     const params = new URLSearchParams({ task_key: taskKey });
     return this._execute(`/mockup-generator/task?${params.toString()}`, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 }

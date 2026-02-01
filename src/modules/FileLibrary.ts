@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** File option when adding a file (e.g. template_type). */
 export type FileOption = {
@@ -43,7 +43,7 @@ class FileLibrary extends BaseModule {
   public add(body: AddFileRequest): Promise<Response> {
     return this._execute("/files", {
       body: JSON.stringify(body),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -52,7 +52,7 @@ class FileLibrary extends BaseModule {
    * GET /files/{id}
    */
   public get(id: number): Promise<Response> {
-    return this._execute(`/files/${id}`, { method: "Get" });
+    return this._execute(`/files/${id}`, { method: HttpMethod.Get });
   }
 
   /**
@@ -62,7 +62,7 @@ class FileLibrary extends BaseModule {
   public getThreadColors(body: ThreadColorsRequest): Promise<Response> {
     return this._execute("/files/thread-colors", {
       body: JSON.stringify(body),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 }

@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** Query params for warehouse product list. */
 export type WarehouseProductListQuery = {
@@ -48,7 +48,7 @@ class WarehouseProducts extends BaseModule {
       const qs = params.toString();
       if (qs) path += `?${qs}`;
     }
-    const requestInit: RequestInit = { method: "Get" };
+    const requestInit: RequestInit = { method: HttpMethod.Get };
     if (options?.forcePagination) {
       requestInit.headers = new Headers({ "X-PF-Force-Pagination": "1" });
     }
@@ -62,7 +62,7 @@ class WarehouseProducts extends BaseModule {
   public get(id: WarehouseProductId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/warehouse/products/${pathId}`, { method: "Get" });
+    return this._execute(`/warehouse/products/${pathId}`, { method: HttpMethod.Get });
   }
 }
 

@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "../BaseModule";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 /** Sync product list status filter. */
 export type SyncProductStatus =
@@ -49,7 +49,7 @@ class SyncProducts extends BaseModule {
       const qs = params.toString();
       if (qs) path += `?${qs}`;
     }
-    return this._execute(path, { method: "Get" });
+    return this._execute(path, { method: HttpMethod.Get });
   }
 
   /**
@@ -60,7 +60,7 @@ class SyncProducts extends BaseModule {
   public get(id: SyncProductId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/sync/products/${pathId}`, { method: "Get" });
+    return this._execute(`/sync/products/${pathId}`, { method: HttpMethod.Get });
   }
 
   /**
@@ -71,7 +71,7 @@ class SyncProducts extends BaseModule {
   public delete(id: SyncProductId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/sync/products/${pathId}`, { method: "Delete" });
+    return this._execute(`/sync/products/${pathId}`, { method: HttpMethod.Delete });
   }
 }
 

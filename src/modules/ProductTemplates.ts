@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** Query params for product template list (offset, limit). */
 export type ProductTemplateListQuery = {
@@ -36,7 +36,7 @@ class ProductTemplates extends BaseModule {
       const qs = params.toString();
       if (qs) path += `?${qs}`;
     }
-    return this._execute(path, { method: "Get" });
+    return this._execute(path, { method: HttpMethod.Get });
   }
 
   /**
@@ -47,7 +47,7 @@ class ProductTemplates extends BaseModule {
   public get(id: ProductTemplateId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/product-templates/${pathId}`, { method: "Get" });
+    return this._execute(`/product-templates/${pathId}`, { method: HttpMethod.Get });
   }
 
   /**
@@ -58,7 +58,7 @@ class ProductTemplates extends BaseModule {
   public delete(id: ProductTemplateId): Promise<Response> {
     const pathId =
       typeof id === "string" ? encodeURIComponent(id) : String(id);
-    return this._execute(`/product-templates/${pathId}`, { method: "Delete" });
+    return this._execute(`/product-templates/${pathId}`, { method: HttpMethod.Delete });
   }
 }
 

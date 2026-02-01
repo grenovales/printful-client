@@ -78,3 +78,4 @@ class PrintfulClient {
 
 export { PrintfulClient };
 export type { PrintfulApiError } from "./RequestHelper";
+export { HttpMethod } from "./RequestHelper";

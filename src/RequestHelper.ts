@@ -3,6 +3,14 @@
  */
 import fetch, { Headers } from "cross-fetch";
 
+/** HTTP method enum; values are uppercase for request use. */
+export enum HttpMethod {
+  Get = "GET",
+  Post = "POST",
+  Put = "PUT",
+  Delete = "DELETE",
+}
+
 type PrintfulErrorResponse = {
   code?: number;
   result?: string;
@@ -45,7 +53,7 @@ class RequestHelper {
   ) {
     this.headers = new Headers();
     this.headers.append("Authorization", `Bearer ${apiToken}`);
-    this.headers.append("content_type", "application/json");
+    this.headers.append("Content-Type", "application/json");
     if (storeID) {
       this.headers.append("X-PF-Store-Id", storeID);
     }

@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /** Request body for approving a design (POST /approval-sheets). */
 export type ApproveDesignRequest = {
@@ -34,7 +34,7 @@ class ApprovalSheets extends BaseModule {
    * GET /approval-sheets
    */
   public getAll(): Promise<Response> {
-    return this._execute("/approval-sheets", { method: "Get" });
+    return this._execute("/approval-sheets", { method: HttpMethod.Get });
   }
 
   /**
@@ -45,7 +45,7 @@ class ApprovalSheets extends BaseModule {
     const params = new URLSearchParams({ confirm_hash: confirmHash });
     return this._execute(`/approval-sheets?${params.toString()}`, {
       body: JSON.stringify(body),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -60,7 +60,7 @@ class ApprovalSheets extends BaseModule {
     const params = new URLSearchParams({ confirm_hash: confirmHash });
     return this._execute(`/approval-sheets/changes?${params.toString()}`, {
       body: JSON.stringify(body),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 }

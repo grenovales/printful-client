@@ -4,7 +4,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 class StoreInformation extends BaseModule {
   constructor(requestHelper: RequestHelper) {
@@ -16,7 +16,7 @@ class StoreInformation extends BaseModule {
    * GET /stores
    */
   public getAll(): Promise<Response> {
-    return this._execute("/stores", { method: "Get" });
+    return this._execute("/stores", { method: HttpMethod.Get });
   }
 
   /**
@@ -24,7 +24,7 @@ class StoreInformation extends BaseModule {
    * GET /stores/{id}
    */
   public get(id: number): Promise<Response> {
-    return this._execute(`/stores/${id}`, { method: "Get" });
+    return this._execute(`/stores/${id}`, { method: HttpMethod.Get });
   }
 }
 

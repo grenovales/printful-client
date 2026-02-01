@@ -3,7 +3,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 class Tax extends BaseModule {
   constructor(requestHelper: RequestHelper) {
@@ -16,7 +16,7 @@ class Tax extends BaseModule {
    */
   public getCountries(): Promise<Response> {
     return this._execute(`/tax/countries`, {
-      method: "GET",
+      method: HttpMethod.Get,
     });
   }
 }

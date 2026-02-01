@@ -99,7 +99,7 @@ This list captures the currently implemented endpoints and their wrapper methods
 
 ### Tax Rate API
 - `GET /tax/countries` -> `client.tax.getCountries()`
-- **Omitted (deprecated):** `POST /tax/rates` (Calculate tax rate). Printful deprecated this endpoint (sunset process started July 2025; no replacement in the API). For details and migration guidance, see [Tax Rate API – Calculate tax rate](https://developers.printful.com/docs/#tag/Tax-Rate-API/operation/calculateTaxRates).
+- **Omitted (deprecated):** `POST /tax/rates` On July 29, 2025, we started the sunset process. The rate limit is being reduced by 10 RPM each week (starting with 60) until it reaches 0 on September 8, 2025, at which point the endpoint will be removed entirely. [Tax Rate API – Calculate tax rate](https://developers.printful.com/docs/#tag/Tax-Rate-API/operation/calculateTaxRates).
 
 ## Query Params Reference (v1)
 

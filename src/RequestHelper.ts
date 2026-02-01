@@ -64,10 +64,19 @@ class RequestHelper {
     path: string,
     options?: RequestInit | undefined
   ): Promise<Response> {
-    return fetch(`${this.baseUrl}${path.startsWith("/") ? path : `/${path}`}`, {
-      headers: this.headers,
-      ...options,
-    });
+    const mergedHeaders = new Headers(this.headers);
+    if (options?.headers) {
+      const extra =
+        options.headers instanceof Headers
+          ? options.headers
+          : new Headers(options.headers as HeadersInit);
+      extra.forEach((value, key) => mergedHeaders.set(key, value));
+    }
+    const { headers: _o, ...rest } = options ?? {};
+    return fetch(
+      `${this.baseUrl}${path.startsWith("/") ? path : `/${path}`}`,
+      { ...rest, headers: mergedHeaders }
+    );
   }
 
   public async requestJson<T>(

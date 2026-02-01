@@ -5,6 +5,14 @@ import { Tax } from "./modules/Tax";
 import { Orders } from "./modules/Orders";
 import { Catalog } from "./modules/Catalog";
 import { ProductTemplates } from "./modules/ProductTemplates";
+import { FileLibrary } from "./modules/FileLibrary";
+import { EcommercePlatformSync } from "./modules/EcommercePlatformSync";
+import { CountryStateCode } from "./modules/CountryStateCode";
+import { StoreInformation } from "./modules/StoreInformation";
+import { MockupGenerator } from "./modules/MockupGenerator";
+import { WarehouseProducts } from "./modules/WarehouseProducts";
+import { Reports } from "./modules/Reports";
+import { ApprovalSheets } from "./modules/ApprovalSheets";
 
 class PrintfulClient {
   private requestHelper: RequestHelper;
@@ -14,6 +22,14 @@ class PrintfulClient {
   public orders: Orders;
   public catalog: Catalog;
   public productTemplates: ProductTemplates;
+  public fileLibrary: FileLibrary;
+  public ecommercePlatformSync: EcommercePlatformSync;
+  public countryStateCode: CountryStateCode;
+  public storeInformation: StoreInformation;
+  public mockupGenerator: MockupGenerator;
+  public warehouseProducts: WarehouseProducts;
+  public reports: Reports;
+  public approvalSheets: ApprovalSheets;
 
   /**
    *
@@ -42,6 +58,14 @@ class PrintfulClient {
     this.orders = new Orders(this.requestHelper);
     this.catalog = new Catalog(this.requestHelper);
     this.productTemplates = new ProductTemplates(this.requestHelper);
+    this.fileLibrary = new FileLibrary(this.requestHelper);
+    this.ecommercePlatformSync = new EcommercePlatformSync(this.requestHelper);
+    this.countryStateCode = new CountryStateCode(this.requestHelper);
+    this.storeInformation = new StoreInformation(this.requestHelper);
+    this.mockupGenerator = new MockupGenerator(this.requestHelper);
+    this.warehouseProducts = new WarehouseProducts(this.requestHelper);
+    this.reports = new Reports(this.requestHelper);
+    this.approvalSheets = new ApprovalSheets(this.requestHelper);
   }
 
   public requestJson<T>(

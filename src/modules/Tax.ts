@@ -16,7 +16,7 @@ class Tax extends BaseModule {
    */
   public getCountries(): Promise<Response> {
     return this._execute(`/tax/countries`, {
-      method: "Get",
+      method: "GET",
     });
   }
 }

@@ -98,7 +98,8 @@ This list captures the currently implemented endpoints and their wrapper methods
 - `POST /shipping/rates` -> `client.shipping.calculate(body)`
 
 ### Tax Rate API
-- `POST /tax/rates` -> `client.tax.getRate(body)`
+- `GET /tax/countries` -> `client.tax.getCountries()`
+- **Omitted (deprecated):** `POST /tax/rates` (Calculate tax rate). Printful deprecated this endpoint (sunset process started July 2025; no replacement in the API). For details and migration guidance, see [Tax Rate API – Calculate tax rate](https://developers.printful.com/docs/#tag/Tax-Rate-API/operation/calculateTaxRates).
 
 ## Query Params Reference (v1)
 
@@ -122,6 +123,14 @@ When extending the wrapper with new v1 endpoints:
 5. Update this document:
    - Add the endpoint under the matching section.
    - Update the tag mapping if a new module is created.
+
+## Deprecated / Omitted Endpoints (v1)
+
+Endpoints that exist in the Printful v1 API but are **not** implemented in this wrapper because they are deprecated or sunset:
+
+| Endpoint | Reason | Reference |
+| --- | --- | --- |
+| `POST /tax/rates` (Calculate tax rate) | Deprecated by Printful; sunset process started July 2025; no replacement in the Printful API. Use order creation/estimation for costs including tax, or external tax providers. | [Tax Rate API – Calculate tax rate](https://developers.printful.com/docs/#tag/Tax-Rate-API/operation/calculateTaxRates) |
 
 ## Notes for v2
 

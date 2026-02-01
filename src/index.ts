@@ -4,6 +4,7 @@ import { Shipping } from "./modules/Shipping";
 import { Tax } from "./modules/Tax";
 import { Orders } from "./modules/Orders";
 import { Catalog } from "./modules/Catalog";
+import { ProductTemplates } from "./modules/ProductTemplates";
 
 class PrintfulClient {
   private requestHelper: RequestHelper;
@@ -12,6 +13,7 @@ class PrintfulClient {
   public tax: Tax;
   public orders: Orders;
   public catalog: Catalog;
+  public productTemplates: ProductTemplates;
 
   /**
    *
@@ -39,6 +41,7 @@ class PrintfulClient {
     this.tax = new Tax(this.requestHelper);
     this.orders = new Orders(this.requestHelper);
     this.catalog = new Catalog(this.requestHelper);
+    this.productTemplates = new ProductTemplates(this.requestHelper);
   }
 
   public requestJson<T>(

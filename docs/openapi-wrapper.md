@@ -52,7 +52,7 @@ This maps OpenAPI tags in the v1 spec to the current module locations.
 | Orders API | `src/modules/Orders.ts` |
 | Shipping Rate API | `src/modules/Shipping.ts` |
 | Tax Rate API | `src/modules/Tax.ts` |
-| Product Templates API | Not implemented (v1 spec only) |
+| Product Templates API | `src/modules/ProductTemplates.ts` |
 | File Library API | Not implemented (v1 spec only) |
 | Webhook API | Not implemented (v1 spec only) |
 | Store Information API | Not implemented (v1 spec only) |
@@ -97,6 +97,11 @@ This list captures the currently implemented endpoints and their wrapper methods
 ### Shipping Rate API
 - `POST /shipping/rates` -> `client.shipping.calculate(body)`
 
+### Product Templates API
+- `GET /product-templates` -> `client.productTemplates.getAll(query?)`
+- `GET /product-templates/{id}` -> `client.productTemplates.get(id)`
+- `DELETE /product-templates/{id}` -> `client.productTemplates.delete(id)`
+
 ### Tax Rate API
 - `GET /tax/countries` -> `client.tax.getCountries()`
 - **Omitted (deprecated):** `POST /tax/rates` On July 29, 2025, we started the sunset process. The rate limit is being reduced by 10 RPM each week (starting with 60) until it reaches 0 on September 8, 2025, at which point the endpoint will be removed entirely. [Tax Rate API – Calculate tax rate](https://developers.printful.com/docs/#tag/Tax-Rate-API/operation/calculateTaxRates).
@@ -109,6 +114,10 @@ This list captures the currently implemented endpoints and their wrapper methods
 
 ### Products API (Store)
 - `client.products.getAll({ status, category_id, offset, limit })`
+
+### Product Templates API
+- `client.productTemplates.getAll({ offset, limit })`
+- `client.productTemplates.get(id)` / `client.productTemplates.delete(id)` — `id` is template id (number) or external product id (string with leading `@`, e.g. `"@988123"`)
 
 ## Adding or Updating Endpoints (v1)
 

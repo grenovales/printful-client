@@ -3,6 +3,14 @@
  */
 import fetch, { Headers } from "cross-fetch";
 
+/** HTTP method enum; values are uppercase for request use. */
+export enum HttpMethod {
+  Get = "GET",
+  Post = "POST",
+  Put = "PUT",
+  Delete = "DELETE",
+}
+
 type PrintfulErrorResponse = {
   code?: number;
   result?: string;
@@ -45,7 +53,7 @@ class RequestHelper {
   ) {
     this.headers = new Headers();
     this.headers.append("Authorization", `Bearer ${apiToken}`);
-    this.headers.append("content_type", "application/json");
+    this.headers.append("Content-Type", "application/json");
     if (storeID) {
       this.headers.append("X-PF-Store-Id", storeID);
     }
@@ -64,10 +72,19 @@ class RequestHelper {
     path: string,
     options?: RequestInit | undefined
   ): Promise<Response> {
-    return fetch(`${this.baseUrl}${path.startsWith("/") ? path : `/${path}`}`, {
-      headers: this.headers,
-      ...options,
-    });
+    const mergedHeaders = new Headers(this.headers);
+    if (options?.headers) {
+      const extra =
+        options.headers instanceof Headers
+          ? options.headers
+          : new Headers(options.headers as HeadersInit);
+      extra.forEach((value, key) => mergedHeaders.set(key, value));
+    }
+    const { headers: _o, ...rest } = options ?? {};
+    return fetch(
+      `${this.baseUrl}${path.startsWith("/") ? path : `/${path}`}`,
+      { ...rest, headers: mergedHeaders }
+    );
   }
 
   public async requestJson<T>(

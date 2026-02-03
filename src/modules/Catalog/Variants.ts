@@ -2,7 +2,7 @@
  * Printful Product Variant
  */
 import { BaseModule } from "../BaseModule";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 class Variants extends BaseModule {
   constructor(requestHelper: RequestHelper) {
@@ -16,7 +16,7 @@ class Variants extends BaseModule {
    */
   get(id: number): Promise<Response> {
     return this._execute(`/products/variant/${id}`, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 }

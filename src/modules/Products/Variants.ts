@@ -2,7 +2,7 @@
  * Printful Product Variant
  */
 import { BaseModule } from "../BaseModule";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 type ItemOptionValue = string | number | boolean | Array<string | number | boolean>;
 
@@ -45,9 +45,11 @@ class Variants extends BaseModule {
    * @param id Variant ID, See Printful API Documentation
    * @returns Response Object with Variant Information
    */
-  public get(id: string): Promise<Response> {
-    return this._execute(`/store/variants/${id}`, {
-      method: "Get",
+  public get(id: string | number): Promise<Response> {
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/variants/${pathId}`, {
+      method: HttpMethod.Get,
     });
   }
 
@@ -55,15 +57,19 @@ class Variants extends BaseModule {
     id: string | number,
     payload: SyncVariantUpdateRequest
   ): Promise<Response> {
-    return this._execute(`/store/variants/${id}`, {
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/variants/${pathId}`, {
       body: JSON.stringify(payload),
-      method: "Put",
+      method: HttpMethod.Put,
     });
   }
 
   public delete(id: string | number): Promise<Response> {
-    return this._execute(`/store/variants/${id}`, {
-      method: "Delete",
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/variants/${pathId}`, {
+      method: HttpMethod.Delete,
     });
   }
 }

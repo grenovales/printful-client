@@ -3,7 +3,7 @@
  */
 
 import { BaseModule } from "./BaseModule";
-import { RequestHelper } from "../RequestHelper";
+import { RequestHelper, HttpMethod } from "../RequestHelper";
 
 /**
  * Shipping Request Type
@@ -47,7 +47,7 @@ class Shipping extends BaseModule {
     //Get one Product
     return this._execute(`/shipping/rates`, {
       body: JSON.stringify(shippingRequest),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 }

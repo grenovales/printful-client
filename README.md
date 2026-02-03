@@ -22,9 +22,9 @@ pnpm add printful-client
 const { PrintfulClient } = require("printful-client");
 const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-printful.products.get("PRODUCT_ID").then((response: Response) => {
+printful.products.get("PRODUCT_ID").then((response) => {
   response.json().then((value) => {
-    console.log(JSON.stringify(val));
+    console.log(JSON.stringify(value));
   });
 });
 ```
@@ -34,7 +34,7 @@ printful.products.get("PRODUCT_ID").then((response: Response) => {
 const { PrintfulClient } = require("printful-client");
 const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-printful.products.getAll().then((response: Response) => {
+printful.products.getAll().then((response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
@@ -45,7 +45,7 @@ printful.products.getAll().then((response: Response) => {
 const { PrintfulClient } = require("printful-client");
 const printful = new PrintfulClient("PRINTFUL_API_TOKEN");
 
-printful.products.variants.get("VARIANT_ID").then((response: Response) => {
+printful.products.variants.get("VARIANT_ID").then((response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
@@ -72,7 +72,7 @@ const shippingRequest = {
   locale: "en_US",
 };
 
-printful.shipping.calculate(shippingRquest).then((response: Response) => {
+printful.shipping.calculate(shippingRequest).then((response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
@@ -90,7 +90,7 @@ const taxRequest = {
   }
 };
 
-printful.tax.getRate(taxRequest).then((response: Response) => {
+printful.tax.getRate(taxRequest).then((response) => {
   response.json().then((val) => {
     console.log(JSON.stringify(val));
   });
@@ -123,6 +123,14 @@ Refer to the [Printful API Documentation](https://developers.printful.com/docs/)
 ## Contributions
 
 **New contributors welcome!** just create a PR 😎
+
+## Suggested Improvements
+- Add an optional `fetch`/base URL override for easier testing and custom environments.
+- Support request timeouts/abort signals and optional retry/backoff (honor `Retry-After`).
+- Improve error parsing by reading the body once and surfacing request IDs when available.
+- Provide typed response helpers (or a `requestJson` convenience on modules) to reduce `response.json()` boilerplate.
+- Normalize pagination/query parameter types to numbers with validation.
+- Add unit/integration tests and basic CI.
 
 ## Todo
 - Re-organize types 

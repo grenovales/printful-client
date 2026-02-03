@@ -4,7 +4,7 @@
 
 import { BaseModule } from "../BaseModule";
 import { Variants } from "./Variants";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 type ProductQuery = {
   offset?: string;
@@ -75,10 +75,11 @@ class Products extends BaseModule {
     this.variants = new Variants(requestHelper);
   }
 
-  public get(id: string): Promise<Response> {
-    //Get one Product
-    return this._execute(`/store/products/${id}`, {
-      method: "Get",
+  public get(id: string | number): Promise<Response> {
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/products/${pathId}`, {
+      method: HttpMethod.Get,
     });
   }
 
@@ -102,14 +103,14 @@ class Products extends BaseModule {
       }
     }
     return this._execute(path, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 
   public create(payload: SyncProductCreateRequest): Promise<Response> {
     return this._execute("/store/products", {
       body: JSON.stringify(payload),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 
@@ -117,15 +118,19 @@ class Products extends BaseModule {
     id: string | number,
     payload: SyncProductUpdateRequest
   ): Promise<Response> {
-    return this._execute(`/store/products/${id}`, {
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/products/${pathId}`, {
       body: JSON.stringify(payload),
-      method: "Put",
+      method: HttpMethod.Put,
     });
   }
 
   public delete(id: string | number): Promise<Response> {
-    return this._execute(`/store/products/${id}`, {
-      method: "Delete",
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/products/${pathId}`, {
+      method: HttpMethod.Delete,
     });
   }
 
@@ -133,9 +138,11 @@ class Products extends BaseModule {
     id: string | number,
     payload: SyncVariantCreateRequest
   ): Promise<Response> {
-    return this._execute(`/store/products/${id}/variants`, {
+    const pathId =
+      typeof id === "string" ? encodeURIComponent(id) : String(id);
+    return this._execute(`/store/products/${pathId}/variants`, {
       body: JSON.stringify(payload),
-      method: "Post",
+      method: HttpMethod.Post,
     });
   }
 }

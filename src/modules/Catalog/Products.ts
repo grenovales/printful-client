@@ -4,7 +4,7 @@
 
 import { BaseModule } from "../BaseModule";
 import { Variants } from "./Variants";
-import { RequestHelper } from "../../RequestHelper";
+import { RequestHelper, HttpMethod } from "../../RequestHelper";
 
 type ProductQuery = {
   offset?: string;
@@ -25,7 +25,7 @@ class Products extends BaseModule {
   public get(id: number): Promise<Response> {
     //Get one Product
     return this._execute(`/products/${id}`, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 
@@ -48,7 +48,7 @@ class Products extends BaseModule {
       }
     }
     return this._execute(path, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 
@@ -60,7 +60,7 @@ class Products extends BaseModule {
       queryString ? `?${queryString}` : ""
     }`;
     return this._execute(path, {
-      method: "Get",
+      method: HttpMethod.Get,
     });
   }
 }
